@@ -88,5 +88,5 @@ plt.title("Tiempo de ejecución vs Tamaño de entrada n")
 plt.grid(True)
 plt.legend()
 plt.xlim(0, 200000)
-plt.ylim(0, max(tiempos)*1.2)  # margen extra para visualizar bien
+plt.ylim(0, max(tiempos)*1.2)  
 plt.show()
