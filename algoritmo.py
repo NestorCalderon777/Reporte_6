@@ -1,4 +1,5 @@
 import time
+import random
 import matplotlib.pyplot as plt
 
 MOD = 998244353
@@ -62,23 +63,30 @@ print(ans("??"))  # Esperado: 3 ("00","10","11")
 print(ans("1?"))  # Esperado: 2 ("10","11")
 print(ans("?1"))  # Esperado: 1
 
-# =========================
-#  EXPERIMENTO DE TIEMPOS
-# =========================
-sizes = [10, 100, 1000, 5000, 10000, 50000, 100000, 200000]
-times = []
+# -------------------
+# Experimento tiempo vs n
+# -------------------
+tamanos = [i for i in range(0, 200001, 20000)]  # tamaños desde 0 hasta 200000
+tiempos = []
 
-for n in sizes:
-    s = "?" * n  # peor caso, todo '?'
-    start = time.time()
+for n in tamanos:
+    # generar cadena aleatoria con '0', '1' y '?'
+    s = ''.join(random.choice(['0', '1', '?']) for _ in range(max(1, n)))
+    
+    inicio = time.time()
     ans(s)
-    end = time.time()
-    times.append(end - start)
+    fin = time.time()
+    
+    tiempos.append(fin - inicio)
 
-# Gráfico tiempo vs tamaño
-plt.plot(sizes, times, marker="o")
-plt.xlabel("Tamaño de la cadena (n)")
-plt.ylabel("Tiempo de ejecución (segundos)")
-plt.title("Tiempo de ejecución vs tamaño de la entrada")
+# Graficar
+plt.figure(figsize=(8,6))
+plt.plot(tamanos, tiempos, marker='o', linestyle='-', color='b', label="Tiempo de ejecución")
+plt.xlabel("Tamaño de la entrada n")
+plt.ylabel("Tiempo (segundos)")
+plt.title("Tiempo de ejecución vs Tamaño de entrada n")
 plt.grid(True)
+plt.legend()
+plt.xlim(0, 200000)
+plt.ylim(0, max(tiempos)*1.2)  # margen extra para visualizar bien
 plt.show()
